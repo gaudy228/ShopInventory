@@ -1,5 +1,6 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -9,13 +10,12 @@ public class InventoryManager : MonoBehaviour
     public Transform InventoryPanel;
     public List<InventorySlot> slots = new List<InventorySlot>();
     public bool isOpened;
-    
+    private InventoryManager inventoryManager;
     void Start()
     {
-        
         for (int i = 0; i < InventoryPanel.childCount; i++)
         {
-            if(InventoryPanel.GetChild(i).GetComponent<InventorySlot>() != null)
+            if (InventoryPanel.GetChild(i).GetComponent<InventorySlot>() != null)
             {
                 slots.Add(InventoryPanel.GetChild(i).GetComponent<InventorySlot>());
             }
@@ -23,8 +23,6 @@ public class InventoryManager : MonoBehaviour
         UIBG.SetActive(false);
         inventoryPanel.SetActive(false);
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.I))
@@ -41,8 +39,14 @@ public class InventoryManager : MonoBehaviour
                 inventoryPanel.SetActive(false);
             }
         }
-
+    }
+    private void SaveInventory()
+    {
         
+    }
+    private void LoadInventory()
+    {
+       
     }
     public void AddItem(ItemScriptableObject _item, int _amount)
     {
@@ -59,7 +63,6 @@ public class InventoryManager : MonoBehaviour
                 
                 break;
             }
-            
         }
         foreach(InventorySlot slot in slots)
         {
@@ -73,5 +76,6 @@ public class InventoryManager : MonoBehaviour
                 break;
             }
         }
+        
     }
 }

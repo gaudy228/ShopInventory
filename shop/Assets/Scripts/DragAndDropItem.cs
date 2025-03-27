@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class DragAndDropItem : MonoBehaviour, /*IPointerDownHandler, IPointerUpHandler,*/ IDragHandler, IBeginDragHandler, IEndDragHandler
+public class DragAndDropItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     public InventorySlot oldSlot;
     private Transform player;
@@ -22,15 +22,10 @@ public class DragAndDropItem : MonoBehaviour, /*IPointerDownHandler, IPointerUpH
    
     public void OnDrag(PointerEventData eventData)
     {
-
         if (oldSlot.isEmpty)
             return;
-
         transform.localPosition += new Vector3(eventData.delta.x, eventData.delta.y, 0);
         Debug.Log("OnDrag");
-        
-        
-       
     }
    
     public void OnBeginDrag(PointerEventData eventData)
@@ -78,12 +73,10 @@ public class DragAndDropItem : MonoBehaviour, /*IPointerDownHandler, IPointerUpH
             
             ExchangeSlotData(eventData.pointerCurrentRaycast.gameObject.transform.parent.parent.GetComponent<InventorySlot>());
         }
-       
     }
     
     void NullifySlotData()
     {
-        
         oldSlot.item = null;
         oldSlot.amount = 0;
         oldSlot.isEmpty = true;
