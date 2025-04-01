@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class DragAndDropItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
@@ -18,6 +19,17 @@ public class DragAndDropItem : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         player = GameObject.FindGameObjectWithTag("Player").transform;
         
         oldSlot = transform.GetComponentInParent<InventorySlot>();
+        if (oldSlot.isEmpty == false)
+        {
+            oldSlot.SetIcon(oldSlot.item.icon);
+            oldSlot.itemAmount.text = oldSlot.amount.ToString();
+        }
+        else
+        {
+            oldSlot.iconGO.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+            oldSlot.iconGO.GetComponent<Image>().sprite = null;
+            oldSlot.itemAmount.text = "";
+        }
     }
    
     public void OnDrag(PointerEventData eventData)
@@ -25,9 +37,7 @@ public class DragAndDropItem : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         if (oldSlot.isEmpty)
             return;
         transform.localPosition += new Vector3(eventData.delta.x, eventData.delta.y, 0);
-        Debug.Log("OnDrag");
     }
-   
     public void OnBeginDrag(PointerEventData eventData)
     {
         

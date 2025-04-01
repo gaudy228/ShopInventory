@@ -1,21 +1,57 @@
+
+using System.IO;
 using UnityEngine;
-public class SaveManager
+
+
+public class SaveManager : MonoBehaviour
 {
-    public static void Save<T>(string key, T saveData)
+    private InventorySlot slot;
+    private string filePath;
+    private void Start()
     {
-        string jsonDataString = JsonUtility.ToJson(saveData, true);
-        PlayerPrefs.SetString(key, jsonDataString);
+        filePath = Path.Combine(Application.persistentDataPath, "playerData.json");
+        slot = GetComponent<InventorySlot>();
+        slot = Load();
     }
-    public static T Load<T>(string key) where T : new()
+    private void Update()
     {
-        if (PlayerPrefs.HasKey(key))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            string loadedString = PlayerPrefs.GetString(key);
-            return JsonUtility.FromJson<T>(loadedString);
+
+        }
+    }
+    private InventorySlot Load()
+    {
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            InventorySlot data = JsonUtility.FromJson<InventorySlot>(json);
+            Debug.Log("Данные загружены: " + json);
+            return data;
         }
         else
         {
-            return new T();
+            Debug.LogError("Файл не найден!");
+            return null;
         }
+    }
+    private void Save()
+    {
+        for (int i = 0; i < slot.allItems.Count; i++)
+        {
+            if (slot.item == slot.allItems[i])
+            {
+                slot.indexItem = i;
+            }
+        }
+        InventorySlot data = new InventorySlot
+        {
+            indexItem = 1,
+            amount = 5,
+            isEmpty = false,
+        };
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(filePath, json);
+        Debug.Log("Данные сохранены: " + json);
     }
 }

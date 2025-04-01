@@ -9,6 +9,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject inventoryPanel;
     public Transform InventoryPanel;
     public List<InventorySlot> slots = new List<InventorySlot>();
+    [SerializeField] private List<string> _pathSlots = new List<string>();
     public bool isOpened;
     private InventoryManager inventoryManager;
     void Start()
@@ -20,33 +21,25 @@ public class InventoryManager : MonoBehaviour
                 slots.Add(InventoryPanel.GetChild(i).GetComponent<InventorySlot>());
             }
         }
-        UIBG.SetActive(false);
-        inventoryPanel.SetActive(false);
+        //UIBG.SetActive(false);
+        //inventoryPanel.SetActive(false);
     }
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.I))
-        {
-            isOpened = !isOpened;   
-            if (isOpened)
-            {
-                UIBG.SetActive(true);
-                inventoryPanel.SetActive(true);
-            }
-            else
-            {
-                UIBG.SetActive(false);
-                inventoryPanel.SetActive(false);
-            }
-        }
-    }
-    private void SaveInventory()
-    {
-        
-    }
-    private void LoadInventory()
-    {
-       
+        //if (Input.GetKeyDown(KeyCode.I))
+        //{
+        //    isOpened = !isOpened;   
+        //    if (isOpened)
+        //    {
+        //        UIBG.SetActive(true);
+        //        inventoryPanel.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        UIBG.SetActive(false);
+        //        inventoryPanel.SetActive(false);
+        //    }
+        //}
     }
     public void AddItem(ItemScriptableObject _item, int _amount)
     {
@@ -76,6 +69,30 @@ public class InventoryManager : MonoBehaviour
                 break;
             }
         }
-        
+    }
+    private void Load()
+    {
+        for (int i = 0; i < slots.Count;i++)
+        {
+            _pathSlots[i] = Path.Combine(Application.persistentDataPath, $"data{i}.json");
+        }
+        if(_pathSlots != null)
+        {
+            for (int i = 0; i < slots.Count; i++)
+            {
+                slots[i] = JsonUtility.FromJson<InventorySlot>(File.ReadAllText(_pathSlots[i]));
+            }
+        }
+    }
+    private void Save()
+    {
+        for (int i = 0; i < slots.Count; i++)
+        {
+            _pathSlots[i] = Path.Combine(Application.persistentDataPath, $"data{i}.json");
+        }
+        for (int i = 0; i < slots.Count; i++)
+        {
+            File.WriteAllText(_pathSlots[i], JsonUtility.ToJson(slots[i]));
+        }
     }
 }

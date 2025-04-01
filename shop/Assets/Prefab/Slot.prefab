@@ -91,6 +91,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  allItems:
+  - {fileID: 11400000, guid: 1d65fec300749f343afb46f2d6af40de, type: 2}
+  - {fileID: 11400000, guid: d6dbe8aee9d73a6458fa19754beb0460, type: 2}
+  indexItem: 0
   amount: 0
   isEmpty: 1
   iconGO: {fileID: 0}
@@ -363,9 +367,9 @@ RectTransform:
   - {fileID: 363207856400403863}
   m_Father: {fileID: 1009390413926921406}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 64, y: -64}
   m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3069405361930234962
@@ -381,7 +385,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oldSlot: {fileID: 0}
-  mouse1: 0
 --- !u!114 &5082040049266867352
 MonoBehaviour:
   m_ObjectHideFlags: 0

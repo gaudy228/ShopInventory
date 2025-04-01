@@ -1,17 +1,21 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-
+using System.IO;
+using System;
 public class InventorySlot : MonoBehaviour
 {
     public ItemScriptableObject item;
+    public List<ItemScriptableObject> allItems;
+    public int indexItem;
     public int amount;
     public bool isEmpty = true;
     public GameObject iconGO;
     public TMP_Text itemAmount;
     public GameObject Drag;
+    private string filePath;
+    public static Action OnSave;
     private void Awake()
     {
         Drag = transform.GetChild(0).gameObject;
